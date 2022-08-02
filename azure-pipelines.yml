@@ -21,8 +21,11 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 - task: CopyFiles@2
+  displayName: Copy Files
   inputs:
-    targetFolder: '$(Build.ArtifactStagingDirectory)' 
+    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(functionAppName)/
+    Contents: '**'
+    TargetFolder: $(build.artifactstagingdirectory)   
 - task: PublishBuildArtifacts@1    
   displayName: 'Publish Artifact: drop'
   inputs:
@@ -34,3 +37,4 @@ steps:
     appType: functionApp
     appName: $(appName)
     package: $(build.artifactstagingdirectory)/$(appName)
+    
